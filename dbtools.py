@@ -5,13 +5,13 @@ import requests
 __author__ = 'aliona'
 
 
-def getSt(zone, branch_node = 0):
+def getSt(zone, branch_node = '45807'):
 
   tree = etree.parse('data.xml')
 
   branch = getBranch(branch_node)
 
-  return str(tree.xpath('//zone[@number="'+ zone + '"]/station[contains(@branch_tag, ' + branch + ')/text()]/refId/text()'))[2:-2]
+  return str(tree.xpath('//zone[@number="'+ zone + '"]/station[contains(branch_tag/text(), "' + branch + '") or contains("' + branch + '", branch_tag/text())][1]/refId/text()'))[2:-2]
 
 
 def getZone(st):
@@ -25,15 +25,15 @@ def getBranch(st):
 
   tree = etree.parse('data.xml')
 
-  return str(tree.xpath('//station[refId/text()="'+ str(st) +'"]/@branch_tag'))[2:-2]
+  return str(tree.xpath('//station[refId/text()="'+ str(st) +'"]/branch_tag/text()'))[2:-2]
 
 
 def isSameBranch(station1, station2):
 
   tree = etree.parse('data.xml')
 
-  branch1 = str(tree.xpath('//station[@name="'+ station1 + '"]/@branch_tag'))
-  branch2 = str(tree.xpath('//station[@name="'+ station2 + '"]/@branch_tag'))
+  branch1 = str(tree.xpath('//station[@name="'+ station1 + '"]/branch_tag/text()'))
+  branch2 = str(tree.xpath('//station[@name="'+ station2 + '"]/branch_tag/text()'))
 
   return (branch1 in branch2) | (branch2 in branch1)
 
