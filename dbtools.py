@@ -5,11 +5,13 @@ import requests
 __author__ = 'aliona'
 
 
-def getSt(zone, branch_node = 'a'):
+def getSt(zone, branch_node = 0):
 
   tree = etree.parse('data.xml')
 
-  return str(tree.xpath('//zone[@number="'+ zone + '"]/station[1]/refId/text()'))[2:-2]
+  branch = getBranch(branch_node)
+
+  return str(tree.xpath('//zone[@number="'+ zone + '"]/station[contains(@branch_tag, ' + branch + ')/text()]/refId/text()'))[2:-2]
 
 
 def getZone(st):
@@ -17,6 +19,13 @@ def getZone(st):
   tree = etree.parse('data.xml')
 
   return str(tree.xpath('//station[refId/text()="'+ str(st) +'"]/../@number'))[2:-2]
+
+
+def getBranch(st):
+
+  tree = etree.parse('data.xml')
+
+  return str(tree.xpath('//station[refId/text()="'+ str(st) +'"]/@branch_tag'))[2:-2]
 
 
 def isSameBranch(station1, station2):
