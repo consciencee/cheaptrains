@@ -22,6 +22,7 @@ def getZones(url, stFrom, stTo):
   nodes = getNodes(url, stFrom, stTo)
 
   #dbg
+  url = ''
   #nodes = []
   #f = open('bufData', 'r')
   #for line in f:
@@ -33,7 +34,7 @@ def getZones(url, stFrom, stTo):
   zones = []
 
   for node in nodes:
-    zones.append(str(tree.xpath('//station[name/text()="'+ node[0] +'"]/../@number'))[2:-2])
+    zones.append(int(str(tree.xpath('//station[name/text()="'+ node[0] +'"]/../@number'))[2:-2]))
 
   return list(set(zones))
 
@@ -42,14 +43,14 @@ def getNodes(url, stFrom, stTo):
 
   print 'Receiving station set...'
 
-  response = requests.get(getTrackRef(url, stFrom, stTo), headers={'User-Agent': 'jnjjhh'})#, proxies=proxy) 
+  response = requests.get(getTrackRef(url, stFrom, stTo), headers={'User-Agent': 'jnjjoknknhh'})#, proxies=proxy)
 
   parsed_body = html.fromstring(response.text)
 
   station_names = parsed_body.xpath('//tbody/tr/td[@class="flag"]/a/text()')
   station_refs = parsed_body.xpath('//tbody/*/td[@class="flag"]/a/@href')
 
-  response = requests.get('https://www.tutu.ru/10.php', headers={'User-Agent': 'chchjhh'})
+  response = requests.get('https://www.tutu.ru/10.php', headers={'User-Agent': 'chgtthaaabbvbvbvhh'})
   zones_body = html.fromstring(response.text)
 
   stations_data = []
@@ -74,7 +75,7 @@ def getTrackRef(url, stFrom, stTo):
 
   payload = {'st1': stFrom, 'st2': stTo}
 
-  response = requests.get(url, headers={'User-Agent': 'Bjgklu'}, params=payload)#, proxies=proxy)
+  response = requests.get(url, headers={'User-Agent': 'Bjgxvdklu'}, params=payload)#, proxies=proxy)
 
   parsed_body = html.fromstring(response.text)
 
@@ -95,7 +96,7 @@ def getPrice(url, stFrom, stTo):
 
   payload = {'st1': stFrom, 'st2': stTo}
 
-  response = requests.get(url, headers={'User-Agent': 'Blu'}, params=payload)#, proxies=proxy)
+  response = requests.get(url, headers={'User-Agent': 'Bliojlju'}, params=payload, proxies=proxy)
 
   parsed_body = html.fromstring(response.text)
 
@@ -108,8 +109,5 @@ def getPrice(url, stFrom, stTo):
 
   numericResult = result.replace(' ', '')
   numericResult = re.sub(u'[а-яА-Я]*', '', numericResult)
-
-  print numericResult, stFrom, stTo
-  result = "Цена билета " + result
 
   return float(numericResult)

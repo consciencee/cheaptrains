@@ -69,6 +69,13 @@ class localDbMethodsTesting(unittest.TestCase):
     self.assertEqual(dbtools.getZone(st), '0')
 
 
+class systemMethodsTesting(unittest.TestCase):
+
+  def test_findCheapestWay(self):
+
+    finding.findCheapestWay(51107, 45807)
+
+
 if __name__ == '__main__':
     unittest.main()
 
