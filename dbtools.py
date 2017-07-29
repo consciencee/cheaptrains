@@ -32,8 +32,8 @@ def isSameBranch(st1, st2):
 
   tree = etree.parse('data.xml')
 
-  branch1 = str(tree.xpath('//station[@name="'+ str(st1) + '"]/branch_tag/text()'))
-  branch2 = str(tree.xpath('//station[@name="'+ str(st2) + '"]/branch_tag/text()'))
+  branch1 = getBranch(st1)
+  branch2 = getBranch(st2)
 
   return (branch1 in branch2) | (branch2 in branch1)
 
